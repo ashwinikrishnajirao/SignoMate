@@ -1,0 +1,17 @@
+.App {
+  text-align: center;
+}
+
+.webcam {
+  width: 640px;
+  height: 480px;
+  margin: 20px auto;
+}
+
+.controls {
+  margin: 20px;
+}
+
+.result {
+  margin: 20px;
+}
