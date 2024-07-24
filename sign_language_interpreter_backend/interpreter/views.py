@@ -31,6 +31,9 @@ def analyze(request):
         nparr = np.frombuffer(base64.b64decode(image_data), np.uint8)
         img = cv2.imdecode(nparr, cv2.IMREAD_COLOR)
 
+        # Flip the image horizontally to correct mirror effect
+        img = cv2.flip(img, 1)
+
         frame_rgb = cv2.cvtColor(img, cv2.COLOR_BGR2RGB)
         results = hands.process(frame_rgb)
 

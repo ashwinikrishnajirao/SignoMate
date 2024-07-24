@@ -45,22 +45,53 @@ function App() {
   }, [webcamRef]);
 
   const analyzeFrame = async (imageSrc) => {
-    const response = await fetch('http://localhost:8000/interpreter/analyze/', {
-      method: 'POST',
-      headers: {
-        'Content-Type': 'application/json',
-      },
-      body: JSON.stringify({ image: imageSrc }),
-    });
-    const result = await response.json();
-    setPredictedCharacter(result.character);
-    const ctx = canvasRef.current.getContext('2d');
-    ctx.clearRect(0, 0, canvasRef.current.width, canvasRef.current.height);
-    result.landmarks.forEach(landmarkSet => {
-      drawConnectors(ctx, landmarkSet, HAND_CONNECTIONS);
-      drawLandmarks(ctx, landmarkSet);
-    });
+    // Create a new canvas and context for flipping
+    const tempCanvas = document.createElement('canvas');
+    const tempCtx = tempCanvas.getContext('2d');
+    
+    // Set the canvas dimensions
+    tempCanvas.width = webcamRef.current.video.videoWidth;
+    tempCanvas.height = webcamRef.current.video.videoHeight;
+    
+    // Create an image element
+    const image = new Image();
+    image.src = imageSrc;
+    
+    image.onload = () => {
+      // Draw the image on the temporary canvas
+      tempCtx.drawImage(image, 0, 0);
+  
+      // Flip the canvas horizontally
+      tempCtx.save();
+      tempCtx.scale(-1, 1);
+      tempCtx.translate(-tempCanvas.width, 0);
+      tempCtx.drawImage(image, 0, 0);
+      tempCtx.restore();
+  
+      // Convert the flipped canvas to base64
+      const flippedImageSrc = tempCanvas.toDataURL('image/jpeg');
+  
+      // Send the flipped image to the backend
+      fetch('http://localhost:8000/interpreter/analyze/', {
+        method: 'POST',
+        headers: {
+          'Content-Type': 'application/json',
+        },
+        body: JSON.stringify({ image: flippedImageSrc }),
+      })
+      .then(response => response.json())
+      .then(result => {
+        setPredictedCharacter(result.character);
+        const ctx = canvasRef.current.getContext('2d');
+        ctx.clearRect(0, 0, canvasRef.current.width, canvasRef.current.height);
+        result.landmarks.forEach(landmarkSet => {
+          drawConnectors(ctx, landmarkSet, HAND_CONNECTIONS);
+          drawLandmarks(ctx, landmarkSet);
+        });
+      });
+    };
   };
+  
 
   useEffect(() => {
     if (capturing) {
