@@ -15,3 +15,32 @@
 .result {
   margin: 20px;
 }
+.App {
+  text-align: center;
+}
+
+.webcam-container {
+  position: relative;
+  display: inline-block;
+}
+
+.webcam {
+  position: relative;
+  z-index: 1;
+}
+
+.canvas {
+  position: absolute;
+  top: 0;
+  left: 0;
+  z-index: 2;
+  pointer-events: none; /* Prevent the canvas from blocking webcam interactions */
+}
+
+.controls {
+  margin-top: 10px;
+}
+
+.result {
+  margin-top: 10px;
+}
