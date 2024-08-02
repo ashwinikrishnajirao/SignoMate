@@ -1,14 +1,80 @@
-.landing-page {
+body, html {
+    margin: 0;
+    padding: 0;
+    height: 100%;
+    width: 100%;
+    font-family: Arial, sans-serif;
+  }
+  
+  .landing-page {
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
     text-align: center;
-    margin: 20px;
+    height: 100vh; 
+    background-color: white;
+  }
+  
+  .landing-page img {
+    width: 600px;
+    margin-bottom: 50px;
+  }
+  
+  .landing-page h1 {
+    font-size: 24px;
+    font-weight: bold;
+    margin: 10px 60px;
+  }
+  
+  .landing-page h2 {
+    font-size: 20px;
+    color: red;
+    margin: 10px 20px;
+  }
+  .landing-page h3 {
+    font-size: 18px;
+    margin: 10px 20px;
+  }
+  
+
+  .landing-page p {
+    font-size: 16px;
+    margin: 5px 5px;
   }
   
   .project-link {
-    color: #007bff;
     text-decoration: none;
+    color: black;
+    font-weight: bold;
   }
-  
   .project-link:hover {
-    text-decoration: underline;
+    text-decoration: none;
+    color: blue;
+    font-weight: bold;
   }
   
+  .landing-page .names {
+    display: flex;
+    justify-content: space-between;
+    width: 80%;
+    margin-top: 50px;
+  }
+  
+  .landing-page .names div {
+    margin-top: 50px;
+    text-align: left;
+  }
+  
+  .landing-page .names div p {
+    margin: 5px 0;
+  }
+  .My_button{
+    margin: 80px 10px;
+    border-radius: 10px;
+    font-size: larger;
+    background-color: rgb(184, 239, 188);
+  }
+  .My_button:hover{
+    background-color: rgb(0, 255, 0);
+  }
