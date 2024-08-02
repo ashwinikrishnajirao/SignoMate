@@ -24,7 +24,7 @@ const Home = () => {
           <p>ASSISTANT PROF, DEPT OF CSE</p>
         </div>
       </div>
-      <button className='My_button'><Link to="/app" className="project-link">CLICK TO SEE THE DEMO</Link>
+      <button className='My_button'><Link to="/app" className='My_button' >CLICK TO SEE THE DEMO</Link>
       </button></div>
 
   );
