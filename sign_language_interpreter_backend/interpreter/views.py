@@ -9,7 +9,7 @@ from django.views.decorators.csrf import csrf_exempt
 import json
 
 # Load the trained model
-model_dict = pickle.load(open('model_og.p', 'rb'))
+model_dict = pickle.load(open('model.p', 'rb'))
 model = model_dict['model']
 
 mp_hands = mp.solutions.hands

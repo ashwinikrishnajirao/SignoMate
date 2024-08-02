@@ -28,7 +28,7 @@ data = np.asarray(padded_data)
 labels = np.asarray(labels)
 
 # Split data into training and testing sets
-x_train, x_test, y_train, y_test = train_test_split(data, labels, test_size=0.9, shuffle=True, stratify=labels)
+x_train, x_test, y_train, y_test = train_test_split(data, labels, test_size=0.8, shuffle=True, stratify=labels)
 
 # Train model
 model = RandomForestClassifier()

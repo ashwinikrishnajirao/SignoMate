@@ -82,7 +82,9 @@ while True:
             cv2.putText(frame, predicted_character, (x1, y1 - 10), cv2.FONT_HERSHEY_SIMPLEX, 1.3, (0, 0, 0), 3, cv2.LINE_AA)
 
     cv2.imshow('frame', frame)
-    cv2.waitKey(1)
+    # cv2.waitKey(1)
+    if cv2.waitKey(1) & 0xFF == ord('q'):
+        break
 
 cap.release()
 cv2.destroyAllWindows()
