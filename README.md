@@ -129,13 +129,11 @@ sign-language-interpreter/
 └── README.md
 ```
 
-## Creator
+## Contibuter
 
-- [Ashwini Krishnaji Rao](https://github.com/ashwinikrishnajirao)
+[Ashwini Krishnaji Rao](https://github.com/ashwinikrishnajirao)
 
-## License
 
-This project is licensed under the MIT License. See the [LICENSE](LICENSE) file for details.
 
 ---
 
