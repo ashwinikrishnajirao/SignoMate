@@ -28,7 +28,7 @@ The Sign Language Interpreter is a web-based application that recognizes sign la
 
 1. Clone the repository:
    ```bash
-   git clone https://github.com/your-username/sign-language-interpreter.git
+   git clone https://github.com/ashwinikrishnajirao/SignoMate.git
    cd sign-language-interpreter/backend
    ```
 
@@ -129,10 +129,9 @@ sign-language-interpreter/
 └── README.md
 ```
 
-## Contributors
+## Creator
 
-- [Your Name](https://github.com/your-username)
-- [Contributor Name](https://github.com/contributor-username)
+- [Ashwini Krishnaji Rao](https://github.com/ashwinikrishnajirao)
 
 ## License
 
@@ -140,4 +139,4 @@ This project is licensed under the MIT License. See the [LICENSE](LICENSE) file 
 
 ---
 
-Feel free to customize this README file with any additional information specific to your project, such as setup instructions, troubleshooting tips, or detailed descriptions of your model and data augmentation techniques.
+
