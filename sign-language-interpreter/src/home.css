@@ -1,0 +1,14 @@
+.landing-page {
+    text-align: center;
+    margin: 20px;
+  }
+  
+  .project-link {
+    color: #007bff;
+    text-decoration: none;
+  }
+  
+  .project-link:hover {
+    text-decoration: underline;
+  }
+  

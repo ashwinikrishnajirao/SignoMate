@@ -11,8 +11,8 @@ const HAND_CONNECTIONS = [
 ];
 
 const drawConnectors = (ctx, points, connections) => {
-  ctx.strokeStyle = 'green';
-  ctx.lineWidth = 2;
+  ctx.strokeStyle = 'rgba(0, 255, 0, 0.7)'; // Semi-transparent green
+  ctx.lineWidth = 3;
   connections.forEach((pair) => {
     const [i, j] = pair;
     ctx.beginPath();
@@ -23,14 +23,22 @@ const drawConnectors = (ctx, points, connections) => {
 };
 
 const drawLandmarks = (ctx, points) => {
-  ctx.fillStyle = 'red';
-  points.forEach(point => {
+  points.forEach((point, index) => {
     const x = point[0] * ctx.canvas.width;
     const y = point[1] * ctx.canvas.height;
     ctx.beginPath();
-    ctx.arc(x, y, 5, 0, 2 * Math.PI);
+    ctx.arc(x, y, 8, 0, 2 * Math.PI);
+    ctx.fillStyle = getLandmarkColor(index);
     ctx.fill();
   });
+};
+
+const getLandmarkColor = (index) => {
+  if (index === 0) return 'red'; // Thumb
+  if (index >= 1 && index <= 4) return 'blue'; // Index finger
+  if (index >= 5 && index <= 8) return 'green'; // Middle finger
+  if (index >= 9 && index <= 12) return 'purple'; // Ring finger
+  return 'orange'; // Pinky
 };
 
 function App() {
@@ -45,33 +53,24 @@ function App() {
   }, [webcamRef]);
 
   const analyzeFrame = async (imageSrc) => {
-    // Create a new canvas and context for flipping
     const tempCanvas = document.createElement('canvas');
     const tempCtx = tempCanvas.getContext('2d');
-    
-    // Set the canvas dimensions
     tempCanvas.width = webcamRef.current.video.videoWidth;
     tempCanvas.height = webcamRef.current.video.videoHeight;
     
-    // Create an image element
     const image = new Image();
     image.src = imageSrc;
     
     image.onload = () => {
-      // Draw the image on the temporary canvas
       tempCtx.drawImage(image, 0, 0);
-  
-      // Flip the canvas horizontally
       tempCtx.save();
       tempCtx.scale(-1, 1);
       tempCtx.translate(-tempCanvas.width, 0);
       tempCtx.drawImage(image, 0, 0);
       tempCtx.restore();
-  
-      // Convert the flipped canvas to base64
+      
       const flippedImageSrc = tempCanvas.toDataURL('image/jpeg');
   
-      // Send the flipped image to the backend
       fetch('http://localhost:8000/interpreter/analyze/', {
         method: 'POST',
         headers: {
@@ -83,7 +82,8 @@ function App() {
       .then(result => {
         setPredictedCharacter(result.character);
         const ctx = canvasRef.current.getContext('2d');
-        ctx.clearRect(0, 0, canvasRef.current.width, canvasRef.current.height);
+        const canvas = canvasRef.current;
+        ctx.clearRect(0, 0, canvas.width, canvas.height);
         result.landmarks.forEach(landmarkSet => {
           drawConnectors(ctx, landmarkSet, HAND_CONNECTIONS);
           drawLandmarks(ctx, landmarkSet);
@@ -91,15 +91,15 @@ function App() {
       });
     };
   };
-  
 
   useEffect(() => {
+    let intervalId;
     if (capturing) {
-      const interval = setInterval(() => {
+      intervalId = setInterval(() => {
         capture();
-      }, 500); // Capture every half second
-      return () => clearInterval(interval);
+      }, 150); // Capture every quarter second
     }
+    return () => clearInterval(intervalId);
   }, [capturing, capture]);
 
   return (
@@ -122,6 +122,7 @@ function App() {
           className="canvas"
           width="640"
           height="480"
+          style={{ position: 'absolute', top: 0, left: 0, zIndex: 1 }}
         />
       </div>
       <div className="controls">
